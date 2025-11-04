@@ -23,6 +23,8 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "@react-map/india": "^1.0.21"
+    "@react-map/india": "^1.0.21",
+    "leaflet": "^1.9.4",
+    "react-leaflet": "^5.0.0"
   }
 }
