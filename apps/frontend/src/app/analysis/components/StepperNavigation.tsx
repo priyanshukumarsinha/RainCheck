@@ -2,13 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { MapPin, Droplets, BarChart3, FileText } from "lucide-react"; // icons
 
 export default function StepperNavigation() {
   const steps = [
-    { label: "Location", id: "location" },
-    { label: "Roof & Water", id: "consumption" },
-    { label: "Insights", id: "insights" },
-    { label: "Results", id: "results" },
+    { label: "Location", id: "location", icon: <MapPin size={18} /> },
+    { label: "Roof & Water", id: "consumption", icon: <Droplets size={18} /> },
+    { label: "Insights", id: "insights", icon: <BarChart3 size={18} /> },
+    { label: "Results", id: "results", icon: <FileText size={18} /> },
   ];
 
   const [active, setActive] = useState<string>("location");
@@ -39,7 +40,7 @@ export default function StepperNavigation() {
     const el = document.getElementById(id);
     if (!el) return;
 
-    const headerOffset = 100; // offset so section isn’t hidden behind header
+    const headerOffset = 100;
     const elementPosition = el.getBoundingClientRect().top + window.scrollY;
     const offsetPosition = elementPosition - headerOffset;
 
@@ -69,7 +70,8 @@ export default function StepperNavigation() {
           onClick={() => handleClick(step.id)}
           className={`
             relative text-xs sm:text-sm font-medium px-2 sm:px-3 py-1
-            transition-all duration-300 
+            flex items-center justify-center gap-1 sm:gap-2
+            transition-all duration-300
             ${
               active === step.id
                 ? "text-amber-300 drop-shadow-[0_0_6px_rgba(245,158,11,0.5)]"
@@ -77,7 +79,12 @@ export default function StepperNavigation() {
             }
           `}
         >
-          {step.label}
+          {/* Icon on mobile */}
+          <span className="inline sm:hidden">{step.icon}</span>
+
+          {/* Label on larger screens */}
+          <span className="hidden sm:inline">{step.label}</span>
+
           {active === step.id && (
             <motion.div
               layoutId="stepIndicator"

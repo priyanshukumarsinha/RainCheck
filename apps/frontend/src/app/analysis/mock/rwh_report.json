@@ -1,0 +1,303 @@
+{
+  "reportId": "RWH-2025-ND-001",
+  "metadata": {
+    "dataVersion": "2.0.0",
+    "generatedBy": "WebShield RainCheck Feasibility Engine v2.1",
+    "createdAt": "2025-11-05T18:50:00+05:30",
+    "timezone": "Asia/Kolkata",
+    "sources": [
+      { "name": "IMD Rainfall Data", "type": "API", "confidence": 0.95 },
+      { "name": "Open-Meteo Weather API", "type": "API", "confidence": 0.93 },
+      { "name": "Google Elevation API", "type": "API", "confidence": 0.9 },
+      { "name": "User Input", "type": "Manual", "confidence": 1.0 }
+    ],
+    "notes": "Report auto-generated with user input and public environmental datasets."
+  },
+
+  "userDetails": {
+    "name": "Priyanshu Kumar Sinha",
+    "address": "House No. 27, Sector 62, Noida, Uttar Pradesh, India",
+    "propertyType": "Residential",
+    "roofType": "RCC Flat Roof",
+    "roofArea_m2": 120,
+    "occupants": 4,
+    "primaryUse": "Domestic",
+    "hasGarden": true,
+    "currentWaterSource": "Municipal + Tanker",
+    "reportedIssues": ["Tanker dependence in summer", "High water bills"],
+    "locationConfidence": 0.98
+  },
+
+  "geoProfile": {
+    "latitude": 28.62,
+    "longitude": 77.37,
+    "elevation_m": 207,
+    "slope_percent": 1.8,
+    "drainagePattern": "Gentle southward slope",
+    "soilType": "Loamy sand",
+    "permeability": "High",
+    "distanceToStormDrain_m": 12
+  },
+
+  "locationData": {
+    "city": "Noida",
+    "state": "Uttar Pradesh",
+    "climaticZone": "Composite",
+    "averageAnnualRainfall_mm": 850,
+    "rainfallPattern": {
+      "wetMonths": ["June", "July", "August", "September"],
+      "dryMonths": ["October", "November", "December", "January", "February", "March", "April", "May"]
+    },
+    "historicalRainfall_5yr_avg_mm": {
+      "2019": 910,
+      "2020": 790,
+      "2021": 860,
+      "2022": 720,
+      "2023": 940
+    },
+    "sourceReliability": 0.94
+  },
+
+  "catchmentAnalysis": {
+    "effectiveCatchmentArea_m2": 110,
+    "runoffCoefficient": 0.85,
+    "annualHarvestableWater_L": 850000,
+    "annualHarvestableWater_kL": 79.5,
+    "firstFlushLoss_percent": 5,
+    "netHarvestableWater_kL": 75.5,
+    "lossDueToEvaporation_percent": 2,
+    "collectionSystem": "PVC gutter + mesh filter",
+    "hydraulicEfficiency_percent": 93
+  },
+
+  "waterDemand": {
+    "dailyUsePerPerson_L": 135,
+    "totalDailyUse_L": 540,
+    "monthlyDemand_L": 16200,
+    "nonPotableUse_percent": 45,
+    "nonPotableDemand_L_perMonth": 7290,
+    "potentialCoverage_percent": 55,
+    "seasonalVariation": {
+      "summerIncrease_percent": 10,
+      "monsoonReduction_percent": 15
+    },
+    "peakDemandDays": ["May 20", "June 2", "June 14"]
+  },
+
+  "systemDesign": {
+    "recommendedSystemType": "Hybrid (Storage + Recharge)",
+    "recommendedTankSize_L": 8000,
+    "storageMaterial": "HDPE (UV-stabilized)",
+    "foundationType": "Cement slab (M20)",
+    "filtrationType": "Dual-stage (Mesh + Sand)",
+    "overflowHandling": "Soak pit and recharge well",
+    "estimatedInstallationSpace_m2": 4.5,
+    "firstFlushCapacity_L": 100,
+    "overflowRate_Lps": 1.5,
+    "estimatedLifespan_years": 15,
+    "maintenanceFrequency": "Every 3 months"
+  },
+
+  "technicalDesign": {
+    "pipeDiameter_mm": 90,
+    "filterFlowRate_Lps": 2.5,
+    "roofSlope_percent": 2,
+    "downpipeCount": 3,
+    "storageTankInletHeight_m": 2.2,
+    "bypassProvision": true,
+    "isOverflowConnectedToRecharge": true
+  },
+
+  "financials": {
+    "installationCost_INR": 36500,
+    "annualMaintenanceCost_INR": 1500,
+    "annualSavings_INR": 6200,
+    "paybackPeriod_years": 5.9,
+    "roi_percent": 17.1,
+    "lifecycleCost_15yrs_INR": 47000,
+    "lifecycleSavings_15yrs_INR": 93000,
+    "netBenefit_INR": 46000,
+    "costBreakdown": {
+      "gutterAndPiping": 6500,
+      "filters": 4000,
+      "storageTank": 20000,
+      "civilWork": 3500,
+      "labor": 2500
+    },
+    "fundingOptions": ["Self-funded", "Municipal rebate (₹5000)"],
+    "currency": "INR"
+  },
+
+  "hydrologyModel": {
+    "timeStep": "monthly",
+    "units": "litres",
+    "balance": [
+      { "month": "Jan", "rainfall_L": 4000, "harvested_L": 3300, "losses_L": 200, "used_L": 3000 },
+      { "month": "Feb", "rainfall_L": 5000, "harvested_L": 4200, "losses_L": 300, "used_L": 3100 },
+      { "month": "Mar", "rainfall_L": 7000, "harvested_L": 5900, "losses_L": 350, "used_L": 3600 },
+      { "month": "Apr", "rainfall_L": 12000, "harvested_L": 10500, "losses_L": 500, "used_L": 5000 },
+      { "month": "May", "rainfall_L": 20000, "harvested_L": 18000, "losses_L": 700, "used_L": 6000 },
+      { "month": "Jun", "rainfall_L": 32000, "harvested_L": 29000, "losses_L": 900, "used_L": 7000 },
+      { "month": "Jul", "rainfall_L": 48000, "harvested_L": 44000, "losses_L": 1100, "used_L": 7200 },
+      { "month": "Aug", "rainfall_L": 41000, "harvested_L": 37000, "losses_L": 1200, "used_L": 7100 },
+      { "month": "Sep", "rainfall_L": 25000, "harvested_L": 23000, "losses_L": 800, "used_L": 6500 },
+      { "month": "Oct", "rainfall_L": 10000, "harvested_L": 8900, "losses_L": 400, "used_L": 5200 },
+      { "month": "Nov", "rainfall_L": 6000, "harvested_L": 5400, "losses_L": 300, "used_L": 4100 },
+      { "month": "Dec", "rainfall_L": 4000, "harvested_L": 3500, "losses_L": 200, "used_L": 3100 }
+    ],
+    "annualEfficiency_percent": 88
+  },
+
+  "scenarioAnalysis": {
+    "bestCase": {
+      "annualRainfall_mm": 950,
+      "coverage_percent": 64,
+      "roi_percent": 19,
+      "reliability_percent": 82
+    },
+    "averageCase": {
+      "annualRainfall_mm": 850,
+      "coverage_percent": 55,
+      "roi_percent": 17,
+      "reliability_percent": 76
+    },
+    "worstCase": {
+      "annualRainfall_mm": 650,
+      "coverage_percent": 41,
+      "roi_percent": 13,
+      "reliability_percent": 62
+    },
+    "sensitivityAnalysis": {
+      "variable": "rainfall_mm",
+      "impactOnCoverage_percentPer100mm": 6.5
+    }
+  },
+
+  "environmentalImpact": {
+    "groundwaterRecharge_L_perYear": 30000,
+    "co2Saved_kg_perYear": 190,
+    "stormwaterReduction_L_perYear": 25000,
+    "urbanFloodReduction_percent": 10,
+    "equivalentTankerTripsAvoided": 16,
+    "biodiversityImpact": "Neutral",
+    "localFloodMitigationContribution": "Moderate",
+    "sdgAlignment": ["SDG 6 - Clean Water", "SDG 13 - Climate Action"],
+    "impactRating": "Positive"
+  },
+
+  "reliabilityAssessment": {
+    "historicalRainfallData_mm": {
+      "2019": 910,
+      "2020": 790,
+      "2021": 860,
+      "2022": 720,
+      "2023": 940
+    },
+    "averageReliability_percent": 76,
+    "reliabilityIndex": "Medium-high",
+    "backupRequired_months": ["May", "June"],
+    "confidenceScore": 0.89
+  },
+
+  "legalAndMaintenance": {
+    "localRegulations": "Mandatory RWH for plots above 100 m² (Noida Authority, 2021)",
+    "rebateEligibility": true,
+    "rebateAmount_INR": 5000,
+    "safetyChecklist": [
+      "Regular tank cleaning before monsoon",
+      "Mosquito mesh and first flush valve inspection",
+      "Quarterly filter cleaning"
+    ],
+    "maintenanceCostEstimate_INR_perYear": 1500,
+    "estimatedAnnualMaintenanceHours": 8
+  },
+
+  "charts": {
+    "monthlyRainfallTrend": [
+      { "month": "Jan", "rainfall_mm": 18 },
+      { "month": "Feb", "rainfall_mm": 22 },
+      { "month": "Mar", "rainfall_mm": 28 },
+      { "month": "Apr", "rainfall_mm": 35 },
+      { "month": "May", "rainfall_mm": 60 },
+      { "month": "Jun", "rainfall_mm": 120 },
+      { "month": "Jul", "rainfall_mm": 240 },
+      { "month": "Aug", "rainfall_mm": 200 },
+      { "month": "Sep", "rainfall_mm": 90 },
+      { "month": "Oct", "rainfall_mm": 45 },
+      { "month": "Nov", "rainfall_mm": 20 },
+      { "month": "Dec", "rainfall_mm": 12 }
+    ],
+    "tankReliabilityCurve": [
+      { "tankSize_L": 2000, "reliability_percent": 45 },
+      { "tankSize_L": 4000, "reliability_percent": 63 },
+      { "tankSize_L": 6000, "reliability_percent": 78 },
+      { "tankSize_L": 8000, "reliability_percent": 86 },
+      { "tankSize_L": 10000, "reliability_percent": 91 }
+    ],
+    "costBenefitTrend": [
+      { "year": 1, "cost_INR": 36500, "savings_INR": 6200 },
+      { "year": 2, "cost_INR": 38000, "savings_INR": 12400 },
+      { "year": 3, "cost_INR": 39500, "savings_INR": 18600 },
+      { "year": 4, "cost_INR": 41000, "savings_INR": 24800 },
+      { "year": 5, "cost_INR": 42500, "savings_INR": 31000 }
+    ],
+    "waterBalance": [
+      { "component": "Rainfall Available", "volume_kL": 79.5 },
+      { "component": "Harvestable", "volume_kL": 75.5 },
+      { "component": "Utilized", "volume_kL": 41.5 },
+      { "component": "Recharge", "volume_kL": 30.0 }
+    ],
+    "sustainabilityMetrics": [
+      { "metric": "ROI", "value": 17.1 },
+      { "metric": "Reliability", "value": 76 },
+      { "metric": "Recharge", "value": 30 },
+      { "metric": "Harvest Utilization", "value": 55 },
+      { "metric": "CO₂ Savings", "value": 0.19 }
+    ]
+  },
+
+  "aiGeneratedInsights": {
+    "verdict": "Highly Feasible",
+    "confidenceScore": 0.93,
+    "keyFactors": [
+      "Strong annual rainfall and suitable roof area",
+      "Affordable payback (<6 years)",
+      "Positive recharge and CO₂ offset"
+    ],
+    "recommendations": [
+      "Install 8000 L HDPE tank with overflow recharge pit",
+      "Clean filters quarterly and flush before monsoon",
+      "Claim ₹5000 rebate from Noida Authority",
+      "Add IoT water level sensor for monitoring"
+    ],
+    "limitations": [
+      "Storage space is limited; expansion may be needed in high rainfall years",
+      "Efficiency drops slightly with poor maintenance"
+    ],
+    "explanation": "Feasibility rated high due to favorable climatic, technical, and financial indicators. Minor dependency on maintenance quality."
+  },
+
+  "summary": {
+    "annualHarvest_kL": 75.5,
+    "annualDemand_kL": 194,
+    "coverage_percent": 55,
+    "roi_percent": 17.1,
+    "reliability_percent": 76,
+    "payback_years": 5.9,
+    "finalVerdict": "✅ Technically and economically feasible"
+  },
+
+  "versioning": {
+    "createdAt": "2025-11-05T18:50:00+05:30",
+    "lastUpdated": "2025-11-05T18:55:00+05:30",
+    "modifiedBy": "system",
+    "changeLog": [
+      {
+        "field": "annualRainfall_mm",
+        "old": 900,
+        "new": 850,
+        "reason": "Updated IMD dataset for 2024 monsoon season"
+      }
+    ]
+  }
+}

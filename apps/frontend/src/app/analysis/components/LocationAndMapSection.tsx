@@ -3,18 +3,26 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
-const MapWithPolygon = dynamic(() => import("../ui/MapWithPolygon"), {
-  ssr: false, 
-});
+import { useFeasibility } from "../context/FeasibilityContext";
 import RainfallDataCard from "../ui/RainfallDataCard";
 import { mockRainfallData } from "../mock/mockRainfallData";
 
+// Dynamic import for map (no SSR)
+const MapWithPolygon = dynamic(() => import("../ui/MapWithPolygon"), {
+  ssr: false,
+});
+
 export default function LocationAndMapSection() {
+  const { input, setInput } = useFeasibility();
+
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
+  const [rainfallData, setRainfallData] = useState<any>(mockRainfallData);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [permissionGranted, setPermissionGranted] = useState<boolean>(false);
+  const [roofArea, setRoofArea] = useState<number | null>(null);
 
+  /** 🌍 Handle location access */
   const handleUseMyLocation = () => {
     if (!navigator.geolocation) {
       setError("Geolocation is not supported by your browser.");
@@ -25,7 +33,7 @@ export default function LocationAndMapSection() {
     setError(null);
 
     navigator.geolocation.getCurrentPosition(
-      (position) => {
+      async (position) => {
         const coords = {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
@@ -33,17 +41,51 @@ export default function LocationAndMapSection() {
         setUserLocation(coords);
         setPermissionGranted(true);
         setLoading(false);
+
+        // Optionally use reverse geocoding (mock for now)
+        const mockCity = "Noida";
+        const mockRainfall = 850;
+
+        setRainfallData({
+          city: mockCity,
+          annualRainfall: mockRainfall,
+          source: "Mock dataset",
+          lastYear: 870,
+        });
+
+        // Update context
+        setInput((prev: any) => ({
+          ...prev,
+          city: mockCity,
+          annualRainfall_mm: mockRainfall,
+        }));
       },
       (err) => {
         console.error("Location error:", err);
         setError("Unable to retrieve your location. Showing mock data.");
         setPermissionGranted(false);
         setLoading(false);
+
+        // Fallback: Use mock rainfall + city
+        setInput((prev: any) => ({
+          ...prev,
+          city: mockRainfallData.city,
+          annualRainfall_mm: mockRainfallData.annualRainfall,
+        }));
       }
     );
   };
 
-  // Automatically check if permission already granted
+  /** 🗺️ Handle roof area updates from the map polygon (optional) */
+  const handlePolygonAreaChange = (area_m2: number) => {
+    setRoofArea(area_m2);
+    setInput((prev: any) => ({
+      ...prev,
+      roofArea_m2: area_m2,
+    }));
+  };
+
+  /** 🔄 Auto-fetch location if permission already granted */
   useEffect(() => {
     if (navigator.geolocation && navigator.permissions) {
       navigator.permissions
@@ -51,12 +93,18 @@ export default function LocationAndMapSection() {
         .then((result) => {
           if (result.state === "granted") {
             setPermissionGranted(true);
-            navigator.geolocation.getCurrentPosition((pos) =>
-              setUserLocation({
+            navigator.geolocation.getCurrentPosition((pos) => {
+              const coords = {
                 lat: pos.coords.latitude,
                 lng: pos.coords.longitude,
-              })
-            );
+              };
+              setUserLocation(coords);
+              setInput((prev: any) => ({
+                ...prev,
+                city: "Bengaluru",
+                annualRainfall_mm: 950,
+              }));
+            });
           }
         })
         .catch(() => {
@@ -88,7 +136,10 @@ export default function LocationAndMapSection() {
           >
             {loading ? "Locating..." : "Use My Current Location"}
           </button>
-          <button className="px-4 py-2 rounded-md border border-cyan-400 text-cyan-400 text-sm hover:bg-cyan-400 hover:text-black transition-colors">
+          <button
+            onClick={() => alert("Roof drawing feature coming soon!")}
+            className="px-4 py-2 rounded-md border border-cyan-400 text-cyan-400 text-sm hover:bg-cyan-400 hover:text-black transition-colors"
+          >
             Draw Roof Area
           </button>
         </div>
@@ -105,7 +156,7 @@ export default function LocationAndMapSection() {
           transition={{ duration: 0.5 }}
           className="rounded-lg overflow-hidden border border-gray-800"
         >
-          <MapWithPolygon/>
+          <MapWithPolygon onAreaChange={handlePolygonAreaChange} />
         </motion.div>
 
         <p className="text-center text-xs text-gray-500">
@@ -121,10 +172,17 @@ export default function LocationAndMapSection() {
         className="max-w-md mx-auto"
       >
         <RainfallDataCard
-          rainfall={mockRainfallData}
+          rainfall={rainfallData}
           locationGranted={permissionGranted && !!userLocation}
         />
       </motion.div>
+
+      {/* Summary Text */}
+      {roofArea && (
+        <p className="text-center text-sm text-gray-400">
+          ✅ Roof area captured: <span className="text-amber-300">{roofArea.toFixed(1)} m²</span>
+        </p>
+      )}
     </section>
   );
 }

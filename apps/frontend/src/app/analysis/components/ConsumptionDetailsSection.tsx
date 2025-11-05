@@ -3,39 +3,49 @@
 import { motion } from "framer-motion";
 import { useFeasibility } from "../context/FeasibilityContext";
 import { useState, useEffect } from "react";
+import { Droplets, Gauge, Home, Cloud, Coins } from "lucide-react";
 
 export default function ConsumptionDetailsSection() {
   const { input, setInput, generateReport, loading, report } = useFeasibility();
   const [autoFillFlash, setAutoFillFlash] = useState(false);
   const [scrollPending, setScrollPending] = useState(false);
+  const [generated, setGenerated] = useState(false);
 
+  /* ✨ Highlight prefilled values */
   useEffect(() => {
     setAutoFillFlash(true);
     const timer = setTimeout(() => setAutoFillFlash(false), 1000);
     return () => clearTimeout(timer);
   }, []);
 
-  // 🧭 When report becomes available, scroll to "insights"
+  /* 📜 Scroll to "insights" after report generation */
   useEffect(() => {
     if (report && scrollPending) {
       const el = document.getElementById("insights");
       if (el) {
-        const offset = -100; // adjust for header height
-        const y = el.getBoundingClientRect().top + window.scrollY + offset;
+        const y = el.getBoundingClientRect().top + window.scrollY - 80;
         window.scrollTo({ top: y, behavior: "smooth" });
-        setScrollPending(false);
       }
+      setScrollPending(false);
+      setGenerated(true);
+      setTimeout(() => setGenerated(false), 4000);
     }
   }, [report, scrollPending]);
 
-  const totalUsage = input.householdSize * input.avgDailyUse_L;
-  const monthlyUsage = totalUsage * 30;
+  /* Derived values */
+  const totalDailyUse = input.householdSize * input.avgDailyUse_L;
+  const monthlyUse = totalDailyUse * 30;
+  const annualHarvest_kL = Math.round((input.annualRainfall_mm * input.roofArea_m2 * 0.85) / 1000);
 
-  /** --- Generate and schedule scroll --- */
+  /* 🧠 Generate full feasibility report */
   const handleGenerate = async () => {
+    if (loading) return;
     setScrollPending(true);
-    await generateReport(); // this triggers ConditionalInsights to render
+    await generateReport();
   };
+
+  /* ✅ Safe number parsing */
+  const parseValue = (val: string) => (val === "" ? 0 : Number(val));
 
   return (
     <motion.section
@@ -46,46 +56,38 @@ export default function ConsumptionDetailsSection() {
       className="space-y-8"
     >
       {/* --- Header --- */}
-      <div className="space-y-1 text-center sm:text-left">
+      <div className="text-center sm:text-left space-y-2">
         <h2 className="text-3xl font-semibold text-amber-400">
-          2. Water Consumption & Cost Details
+          2. Water Consumption & Site Details
         </h2>
         <p className="text-gray-400 text-sm">
-          Provide local and household details. RainCheck uses this data to
-          simulate realistic hydrological, financial, and climate projections.
+          Provide your household and cost details. RainCheck will use these
+          to estimate rainwater harvesting potential, system cost, and payback.
         </p>
       </div>
 
       {/* --- Input Grid --- */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
         <InputField
-          label="Number of Dwellers"
+          label="Number of Occupants"
           type="number"
           value={input.householdSize}
           onChange={(v: string) =>
-            setInput((p: any) => ({ ...p, householdSize: Number(v) }))
+            setInput((p: any) => ({ ...p, householdSize: parseValue(v) }))
           }
           autoFlash={autoFillFlash}
+          icon={<Home className="w-4 h-4 text-amber-400" />}
         />
 
         <InputField
-          label="Average Daily Water Use (L/person)"
+          label="Average Daily Use (L/person)"
           type="number"
           value={input.avgDailyUse_L}
           onChange={(v: string) =>
-            setInput((p: any) => ({ ...p, avgDailyUse_L: Number(v) }))
+            setInput((p: any) => ({ ...p, avgDailyUse_L: parseValue(v) }))
           }
           autoFlash={autoFillFlash}
-        />
-
-        <InputField
-          label="Tank Capacity (L)"
-          type="number"
-          value={input.tankSize_L}
-          onChange={(v: string) =>
-            setInput((p: any) => ({ ...p, tankSize_L: Number(v) }))
-          }
-          autoFlash={autoFillFlash}
+          icon={<Gauge className="w-4 h-4 text-emerald-400" />}
         />
 
         <InputField
@@ -93,12 +95,57 @@ export default function ConsumptionDetailsSection() {
           type="number"
           value={input.roofArea_m2}
           onChange={(v: string) =>
-            setInput((p: any) => ({ ...p, roofArea_m2: Number(v) }))
+            setInput((p: any) => ({ ...p, roofArea_m2: parseValue(v) }))
           }
           autoFlash={autoFillFlash}
+          icon={<Droplets className="w-4 h-4 text-blue-400" />}
         />
 
-        {/* Roof Type */}
+        <InputField
+          label="Annual Rainfall (mm)"
+          type="number"
+          value={input.annualRainfall_mm}
+          onChange={(v: string) =>
+            setInput((p: any) => ({ ...p, annualRainfall_mm: parseValue(v) }))
+          }
+          autoFlash={autoFillFlash}
+          icon={<Cloud className="w-4 h-4 text-cyan-400" />}
+        />
+
+        <InputField
+          label="Tank Capacity (L)"
+          type="number"
+          value={input.tankSize_L}
+          onChange={(v: string) =>
+            setInput((p: any) => ({ ...p, tankSize_L: parseValue(v) }))
+          }
+          autoFlash={autoFillFlash}
+          icon={<Gauge className="w-4 h-4 text-amber-400" />}
+        />
+
+        <InputField
+          label="Installation Cost (₹)"
+          type="number"
+          value={input.installationCost_INR}
+          onChange={(v: string) =>
+            setInput((p: any) => ({
+              ...p,
+              installationCost_INR: parseValue(v),
+            }))
+          }
+          autoFlash={autoFillFlash}
+          icon={<Coins className="w-4 h-4 text-yellow-400" />}
+        />
+
+        <InputField
+          label="City / Location"
+          type="text"
+          value={input.city || ""}
+          onChange={(v: string) => setInput((p: any) => ({ ...p, city: v }))}
+          autoFlash={autoFillFlash}
+          icon={<Cloud className="w-4 h-4 text-gray-400" />}
+        />
+
         <div>
           <label className="block text-xs uppercase text-gray-400">Roof Type</label>
           <select
@@ -115,98 +162,68 @@ export default function ConsumptionDetailsSection() {
             ))}
           </select>
         </div>
-
-        <InputField
-          label="City / Location"
-          type="text"
-          value={input.city || ""}
-          onChange={(v: string) => setInput((p: any) => ({ ...p, city: v }))}
-          autoFlash={autoFillFlash}
-        />
-
-        <InputField
-          label="Annual Rainfall (mm)"
-          type="number"
-          value={input.annualRainfall_mm}
-          onChange={(v: string) =>
-            setInput((p: any) => ({
-              ...p,
-              annualRainfall_mm: Number(v),
-            }))
-          }
-          autoFlash={autoFillFlash}
-        />
-
-        <InputField
-          label="Water Cost (₹/L)"
-          type="number"
-          step="0.001"
-          value={input.waterCost_INR_L}
-          onChange={(v: string) =>
-            setInput((p: any) => ({
-              ...p,
-              waterCost_INR_L: Number(v),
-            }))
-          }
-          autoFlash={autoFillFlash}
-        />
-
-        <InputField
-          label="Installation Cost (₹)"
-          type="number"
-          value={input.installationCost_INR}
-          onChange={(v: string) =>
-            setInput((p: any) => ({
-              ...p,
-              installationCost_INR: Number(v),
-            }))
-          }
-          autoFlash={autoFillFlash}
-        />
       </div>
 
-      {/* --- Summary + Action --- */}
+      {/* --- Summary & Action --- */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3 }}
-        className="pt-4 border-t border-amber-400/10 text-center"
+        className="pt-4 border-t border-amber-400/10 text-center space-y-3"
       >
-        <p className="text-gray-300 text-base">
-          Estimated total use:{" "}
+        <p className="text-gray-300 text-sm sm:text-base">
+          Estimated water use:{" "}
           <span className="text-amber-300 font-semibold">
-            {totalUsage.toLocaleString()} L/day
+            {totalDailyUse.toLocaleString()} L/day
           </span>{" "}
-          (~{monthlyUsage.toLocaleString()} L/month)
+          (~{monthlyUse.toLocaleString()} L/month)
         </p>
+
+        {input.annualRainfall_mm > 0 && input.roofArea_m2 > 0 && (
+          <p className="text-xs text-gray-500">
+            With {input.annualRainfall_mm} mm rainfall and {input.roofArea_m2} m² roof,
+            potential harvest ≈{" "}
+            <span className="text-emerald-400">{annualHarvest_kL} kL/year</span>
+          </p>
+        )}
+
         <button
           onClick={handleGenerate}
           disabled={loading}
-          className="mt-4 px-6 py-2 rounded-md border border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-black transition"
+          className="mt-4 px-6 py-2 rounded-md border border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-black transition disabled:opacity-50"
         >
           {loading ? "Analyzing..." : "Generate Feasibility Report"}
         </button>
+
+        {generated && (
+          <p className="text-xs text-emerald-400 pt-2 animate-pulse">
+            ✅ Report generated successfully! Scroll down for insights.
+          </p>
+        )}
       </motion.div>
     </motion.section>
   );
 }
 
-/* --- Generic Field Component --- */
-function InputField({ label, type, value, onChange, step, autoFlash }: any) {
+/* --- Generic Input Field --- */
+function InputField({ label, type, value, onChange, step, autoFlash, icon }: any) {
   return (
     <div>
       <label className="block text-xs uppercase text-gray-400">{label}</label>
-      <input
-        type={type}
-        step={step}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className={`mt-2 w-full bg-transparent border-b-2 px-1 py-2 text-lg text-gray-100 focus:outline-none ${
-          autoFlash
-            ? "border-cyan-400"
-            : "border-amber-400/20 focus:border-amber-400"
-        }`}
-      />
+      <div className="relative flex items-center">
+        {icon && <div className="absolute left-0 ml-1">{icon}</div>}
+        <input
+          type={type}
+          step={step}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className={`mt-2 w-full bg-transparent border-b-2 px-6 py-2 text-lg text-gray-100 focus:outline-none ${
+            autoFlash
+              ? "border-cyan-400"
+              : "border-amber-400/20 focus:border-amber-400"
+          }`}
+        />
+      </div>
     </div>
   );
 }
