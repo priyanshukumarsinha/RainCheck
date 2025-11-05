@@ -1,17 +1,21 @@
 import express from "express";
 import cors from "cors";
+import dotenv from "dotenv";
+import reportRoute from "./routes/report.js"; // 👈 .js required in ESM!
 
-const PORT = 4000;
+dotenv.config();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get("/api/health", (_req, res) => {
-  const response = { success: true, message: "Backend is healthy" };
-  res.json(response);
+app.get("/", (req, res) => {
+  res.send("🧠 Backend Module System: ESM ✅");
 });
 
-// Mount the new route
+app.use("/api/report", reportRoute);
 
-app.listen(PORT, () => console.log(`✅ Backend running on http://localhost:${PORT}`));
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => {
+  console.log(`✅ Server running at http://localhost:${PORT}`);
+});

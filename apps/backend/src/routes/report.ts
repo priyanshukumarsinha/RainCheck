@@ -4,11 +4,11 @@ import path from "path";
 
 const reportRouter = express.Router();
 
-reportRouter.post("/", (req, res) => {
+reportRouter.get("/", (req, res) => {
   const report = req.body || {};
 
   // Load HTML template
-  const templatePath = path.join(__dirname, "../template/reportTemplate.html");
+  const templatePath = path.join(__dirname, "../templates/reportTemplate.html");
   const html = fs.readFileSync(templatePath, "utf-8");
 
   // Inject the data into the HTML

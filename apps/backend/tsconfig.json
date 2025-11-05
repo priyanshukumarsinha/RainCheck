@@ -1,13 +1,16 @@
 {
   "extends": "../../packages/tsconfig/base.json",
   "compilerOptions": {
-    "outDir": "dist",
-    "rootDir": "src",
+    "target": "ES2022",
+    "module": "ESNext",
     "moduleResolution": "node",
-    "resolveJsonModule": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "noImplicitAny": false
+    "outDir": "dist",
+    "rootDir": "src",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "forceConsistentCasingInFileNames": true
   },
   "include": ["src"]
 }

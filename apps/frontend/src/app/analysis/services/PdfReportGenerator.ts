@@ -1,19 +1,25 @@
 "use client";
+import axios from "axios";
 
-/**
- * Mock PDF generator.
- * Replace later with jsPDF or server-side PDF rendering.
- */
 export async function generateReport(data: any) {
   console.log("Generating mock PDF report for:", data);
+    try {
+    const res = await axios.post("/api/report", data, {
+      headers: { "Content-Type": "application/json" },
+      responseType: "text", 
+    });
 
-  // Mock delay
-  await new Promise((r) => setTimeout(r, 1500));
-
-  // Create a mock download
-  const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
-  const link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = "RainCheck_Report_Mock.json";
-  link.click();
+    // Open new tab and write the HTML
+    const newWindow = window.open("", "_blank");
+    if (newWindow) {
+      newWindow.document.open();
+      newWindow.document.write(res.data);
+      newWindow.document.close();
+    } else {
+      alert("Please allow pop-ups to view the report.");
+    }
+  } catch (err) {
+    console.error("❌ Report generation failed:", err);
+    alert("Failed to generate the report. Check console for details.");
+  }
 }

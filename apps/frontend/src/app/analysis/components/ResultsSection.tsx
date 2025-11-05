@@ -40,6 +40,7 @@ export default function ResultsSection() {
       ...report,
       generatedAt: new Date().toLocaleString(),
     });
+    
     alert("✅ Feasibility report generated (check console).");
   };
 
