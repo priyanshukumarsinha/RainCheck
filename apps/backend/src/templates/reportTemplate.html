@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>RainCheck Feasibility Report</title>
+  </head>
+  <body>
+    <h1>RainCheck Feasibility Report</h1>
+    <div id="content">
+      Loading report data...
+    </div>
+
+    <script>
+      const data = window.REPORT_DATA || {};
+      document.getElementById("content").innerHTML =
+        `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+    </script>
+  </body>
+</html>
