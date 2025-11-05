@@ -28,3 +28,5 @@
  [32m[1m✓[22m[39m Compiled in 125ms
  GET /analysis [32m200[39m in 326ms[2m (compile: 47ms, render: 279ms)[22m
  GET /analysis [32m200[39m in 83ms[2m (compile: 5ms, render: 78ms)[22m
+ [32m[1m✓[22m[39m Compiled in 1213ms
+ [32m[1m✓[22m[39m Compiled in 111ms
