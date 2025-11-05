@@ -1,23 +1,26 @@
 
-
-> frontend@0.1.0 build /workspaces/RainCheck/apps/frontend
+> frontend@0.1.0 build C:\Users\sneha\Documents\sneha_code\RainCheck\apps\frontend
 > next build
 
-   [1m[38;2;173;127;168m▲ Next.js 16.0.1[39m[22m (Turbopack)
+   ▲ Next.js 16.0.1 (Turbopack)
 
- [37m[1m [22m[39m Creating an optimized production build ...
- [32m[1m✓[22m[39m Compiled successfully in 14.9s
-[?25l [37m[1m [22m[39m Running TypeScript  [36m.[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m..[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m...[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m.[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m..[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m...[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m.[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m..[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m...[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m.[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m..[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m...[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m.[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m..[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m...[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m.[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m..[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m...[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m.[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m..[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m...[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m.[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m..[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m...[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m.[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m..[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m...[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m.[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m..[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m...[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m.[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m..[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m...[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m.[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m..[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m...[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m.[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m..[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m...[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m.[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m..[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m...[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m.[39m[2K[1G [37m[1m [22m[39m Running TypeScript  [36m..[39m[2K[1G[?25h[?25l [37m[1m [22m[39m Finished TypeScript in 8.7s  [36m.[39m[2K[1G[?25h [37m[1m [22m[39m Finished TypeScript in 8.7s     [32m[1m✓[22m[39m Finished TypeScript in 8.7s 
-[?25l [37m[1m [22m[39m Collecting page data  [36m.[39m[2K[1G [37m[1m [22m[39m Collecting page data  [36m..[39m[2K[1G [37m[1m [22m[39m Collecting page data  [36m...[39m[2K[1G[?25h [37m[1m [22m[39m Collecting page data in 415.5ms     [32m[1m✓[22m[39m Collecting page data in 415.5ms 
-[?25l [37m[1m [22m[39m Generating static pages (0/5)  [36m[    ][39m[2K[1G [37m[1m [22m[39m Generating static pages (0/5)  [36m[=   ][39m[2K[1G [37m[1m [22m[39m Generating static pages (0/5)  [36m[==  ][39m[2K[1G [37m[1m [22m[39m Generating static pages (0/5)  [36m[=== ][39m[2K[1G[?25h [32m[1m✓[22m[39m Generating static pages (5/5) in 774.0ms
-[?25l [37m[1m [22m[39m Finalizing page optimization  [36m.[39m[2K[1G[?25h [37m[1m [22m[39m Finalizing page optimization in 26.6ms     [32m[1m✓[22m[39m Finalizing page optimization in 26.6ms 
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 14.3s
+   Running TypeScript ...
+   Collecting page data ...
+   Generating static pages (0/6) ...
+   Generating static pages (1/6) 
+   Generating static pages (2/6) 
+   Generating static pages (4/6) 
+ ✓ Generating static pages (6/6) in 3.3s
+   Finalizing page optimization ...
 
-[4mRoute (app)[24m
+Route (app)
 ┌ ○ /
 ├ ○ /_not-found
-└ ○ /analysis
+├ ○ /analysis
+└ ○ /planning
 
 
 ○  (Static)  prerendered as static content
 
-[?25h
