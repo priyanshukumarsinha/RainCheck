@@ -16,7 +16,9 @@ export default function SummaryReport({ data }: SummaryReportProps) {
   const city = data?.summary?.city ?? "—";
   const roofArea = data?.summary?.roofArea_m2 ?? data?.catchmentAnalysis?.effectiveCatchmentArea_m2 ?? 0;
   const rainfall = data?.summary?.annualRainfall_mm ?? data?.locationData?.averageAnnualRainfall_mm ?? 0;
-  const harvest = Math.round(data?.summary?.annualHarvest_kL * 1000 ?? data?.catchmentAnalysis?.annualHarvestableWater_kL * 1000 ?? 0);
+  const harvest = Math.round(
+  ((data?.summary?.annualHarvest_kL ?? data?.catchmentAnalysis?.annualHarvestableWater_kL ?? 0) * 1000)
+);
   const tank = data?.catchmentAnalysis?.recommendedTankSize_L ?? 0;
   const savings = data?.financials?.annualSavings_INR ?? 0;
   const score = data?.summary?.score ?? data?.score ?? 0;

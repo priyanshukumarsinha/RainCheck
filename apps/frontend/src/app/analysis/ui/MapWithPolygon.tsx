@@ -65,7 +65,11 @@ function LocationMarker({ location }: { location: LatLng | null }) {
   ) : null;
 }
 
-export default function MapWithPolygon() {
+interface MapWithPolygonProps {
+  onAreaChange?: (area_m2: number) => void;
+}
+
+export default function MapWithPolygon({ onAreaChange }: MapWithPolygonProps) {
   const [userLocation, setUserLocation] = useState<LatLng | null>(null);
   const [polygon, setPolygon] = useState<LatLng[]>([]);
   const [isDrawing, setIsDrawing] = useState(false);
